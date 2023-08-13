@@ -1,6 +1,4 @@
-
 import { useEffect, useState } from "react";
-
 import { AiFillPlusCircle } from "react-icons/ai";
 import Todo from "../components/TodoList";
 import styles from "../styles";
@@ -29,7 +27,6 @@ const TodoApp = () => {
       text: input,
       completed: false,
     });
-    setInput("");
   };
 
   // read todo from database
@@ -83,6 +80,7 @@ const TodoApp = () => {
           />
           <button
             disabled={!input}
+            onClick={() => setInput("")}
             className={`${styles.button} disabled:text-slate-500`}
           >
             <AiFillPlusCircle size={50} />
