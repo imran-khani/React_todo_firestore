@@ -19,7 +19,6 @@ const TodoApp = () => {
   const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [input, setInput] = useState("");
-  const [deleteItemId, setDeleteItemId] = useState(null);
 
   // create todo
   const createTodo = async (e) => {
@@ -53,20 +52,8 @@ const TodoApp = () => {
   };
 
   // delete todo
-  const openDeleteModal = (id) => {
-    setDeleteItemId(id);
-    window.my_modal_5.showModal();
-  };
-
-  const confirmDelete = async () => {
-    await deleteDoc(doc(db, "todos", deleteItemId));
-    setDeleteItemId(null);
-    window.my_modal_5.close();
-  };
-
-  const cancelDelete = () => {
-    setDeleteItemId(null);
-    window.my_modal_5.close();
+  const deleteTodo = async (id) => {
+    await deleteDoc(doc(db, "todos", id));
   };
 
   return (
@@ -109,31 +96,11 @@ const TodoApp = () => {
                 key={index}
                 todo={todo}
                 toggleComplete={toggleComplete}
-                deleteTodo={() => openDeleteModal(todo.id)}
+                deleteTodo={() => deleteTodo(todo.id)}
               />
             ))}
           </ul>
         )}
-        <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-          <form method="dialog" className="modal-box bg-indigo-500 text-white">
-            <h3 className="font-bold text-lg">Warning</h3>
-            <p className="py-4">Do you want to delete this item?</p>
-            <div className="modal-action">
-              <button
-                className="btn bg-white text-black outline-none border-none hover:text-white hover:bg-red-500"
-                onClick={confirmDelete}
-              >
-                Yes
-              </button>
-              <button
-                className="btn bg-white border-none hover:bg-green-300 hover:text-black"
-                onClick={cancelDelete}
-              >
-                No
-              </button>
-            </div>
-          </form>
-        </dialog>
         {todos.length < 1 ? null : (
           <p className={styles.count}>{`You have ${todos.length} todos`}</p>
         )}
