@@ -16,7 +16,7 @@ const TodoList = ({ todo, toggleComplete, deleteTodo }) => {
 
         <p
           onClick={() => toggleComplete(todo)}
-          className={`${todo.completed ? styles.textComplete : styles.text} line-clamp-1 w-[300px]`}
+          className={`${todo.completed ? styles.textComplete : styles.text} whitespace-pre-wrap`}
         >
           {todo.text}
         </p>
