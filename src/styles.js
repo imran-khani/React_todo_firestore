@@ -10,7 +10,7 @@ const styles = {
   li: "flex justify-between bg-slate-200 p-4 capitalize my-2 user-select-none text-black ",
   liComplete:
     "flex justify-between bg-slate-400 p-4 my-2 capitalize text-red-500",
-  row: "flex overflow-hidden",
+  row: "flex ",
   text: "ml-2 cursor-pointer",
   textComplete: "ml-2 cursor-pointer line-through",
   liButton: "cursor-pointer flex items-center hover:text-red-500 text-xl",
