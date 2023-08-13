@@ -3,8 +3,11 @@ import { BsFillTrash2Fill } from "react-icons/bs";
 import styles from "../styles";
 
 const Todo = ({ todo, toggleComplete }) => {
+  const deleteTodo = (index)=>{
+    
+  }
   return (
-    <li className={todo.completed ? styles.liComplete : styles.li} >
+    <li className={todo.completed ? styles.liComplete : styles.li}>
       <div className={styles.row}>
         <input
           onChange={() => toggleComplete(todo)}
@@ -18,7 +21,7 @@ const Todo = ({ todo, toggleComplete }) => {
           {todo.text}
         </p>
       </div>
-      <button className={styles.liButton}>
+      <button onClick={deleteTodo(index)} className={styles.liButton}>
         <BsFillTrash2Fill />
       </button>
     </li>

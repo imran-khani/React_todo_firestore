@@ -4,6 +4,7 @@ import { AiFillPlusCircle } from "react-icons/ai";
 import Todo from "./components/Todo";
 import styles from "./styles";
 import {
+  addDoc,
   collection,
   doc,
   onSnapshot,
@@ -11,11 +12,22 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "./firebase";
+import { MagnifyingGlass } from "react-loader-spinner";
 
 const App = () => {
   const [todos, setTodos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [input, setInput] = useState("");
 
   // create todo
+  const createTodo = async (e) => {
+    e.preventDefault();
+    await addDoc(collection(db, "todos"), {
+      text: input,
+      completed: false,
+    });
+    setInput("");
+  };
   // read todo from database
   useEffect(() => {
     const q = query(collection(db, "todos"));
@@ -24,6 +36,7 @@ const App = () => {
       querySnapshot.forEach((doc) => {
         todosArr.push({ ...doc.data(), id: doc.id });
       });
+      setLoading(false);
       setTodos(todosArr);
     });
     return () => unSubscribe();
@@ -39,22 +52,46 @@ const App = () => {
     <div className={styles.bg}>
       <div className={styles.container}>
         <h3 className={styles.heading}>Todo App</h3>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={createTodo}>
           <input
+            value={input}
             type="text"
-            className={styles.input}
-            onChange={(e) => setTodos(e.target.value)}
+            className={`${styles.input} `}
+            onChange={(e) => setInput(e.target.value)}
           />
-          <button className={styles.button}>
-            <AiFillPlusCircle size={50} className={styles.button} />
+          <button
+            disabled={!input}
+            className={`${styles.button} disabled:text-slate-500`}
+          >
+            <AiFillPlusCircle size={50} />
           </button>
         </form>
-        <ul>
-          {todos.map((todo, index) => (
-            <Todo key={index} todo={todo} toggleComplete={toggleComplete} />
-          ))}
-        </ul>
-        <p className={styles.count}>You have 2 count</p>
+        {loading ? (
+          <MagnifyingGlass
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="MagnifyingGlass-loading"
+            wrapperClass="MagnifyingGlass-wrapper mx-auto"
+            glassColor="#c0efff"
+            color="#e15b64"
+          />
+        ) : (
+          <ul>
+            {todos.map((todo, index) => (
+              <Todo
+                key={index}
+                todo={todo}
+                toggleComplete={toggleComplete}
+                loading={loading}
+              />
+            ))}
+          </ul>
+        )}
+
+        {todos.length < 1 ? null : (
+          <p className={styles.count}>{`You have ${todos.length} todos`}</p>
+        )}
       </div>
     </div>
   );
