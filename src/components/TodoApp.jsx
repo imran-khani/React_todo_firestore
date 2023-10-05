@@ -63,6 +63,7 @@ const TodoApp = () => {
         <form className={styles.form} onSubmit={createTodo}>
           <input
             value={input}
+            maxlength="50"
             type="text"
             className={`${styles.input} `}
             onChange={(e) => setInput(e.target.value)}
