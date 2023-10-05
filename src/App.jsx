@@ -5,6 +5,7 @@ const App = () => {
   return (
     <div>
       <TodoApp />
+      <p>Made with 💖 by Imran khan</p>
     </div>
   );
 };
