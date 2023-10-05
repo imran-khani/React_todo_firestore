@@ -60,7 +60,7 @@ const TodoApp = () => {
     <div className={styles.bg}>
       <div className={styles.container}>
         <h3 className={styles.heading}>Todo App</h3>
-          <p className="text-center text-white text-sm">Made with 💖 by Imran khan</p>
+          <p className="text-center text-gray-400 text-sm">Made with 💖 by Imran khan</p>
         <form className={styles.form} onSubmit={createTodo}>
           <input
             value={input}
